@@ -6,9 +6,39 @@ This module provides:
 - DataFrame formatting for display
 - settlement transaction generation
 - CSV validation
+- settled-item filtering
 """
 
 import pandas as pd
+
+
+def get_active_df(df):
+    """
+    Return only the expense rows that have NOT been marked as settled.
+
+    If the DataFrame does not contain a "Settled" column, every row is
+    treated as active (unsettled), so this is safe to call on data that
+    predates the settled-item feature.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Expense data, optionally containing a "Settled" boolean column.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Copy of df containing only rows where "Settled" is not True.
+    """
+    if df is None:
+        return df
+
+    if "Settled" not in df.columns:
+        return df.copy()
+
+    settled_mask = df["Settled"].fillna(False).astype(bool)
+
+    return df[~settled_mask].copy()
 
 
 def compute_balances(df):
