@@ -16,9 +16,10 @@ from utils import (
     get_person_breakdown,
     validate_csv,
 )
+APP_NAME = "💸 J.E.M – Jace's Expense Manager"
 
-st.set_page_config(page_title="Splitwise App", layout="wide")
-st.title("💸 Splitwise Mini App")
+st.set_page_config(page_title=APP_NAME, layout="wide")
+st.title(APP_NAME)
 
 # -------------------------
 # ✅ Session State
